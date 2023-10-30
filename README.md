@@ -51,7 +51,7 @@ just below the main title (h1) of the article.
 if javascript is disabled, the graph does not appear. If javascript is enabled, the graph appears.
 
 ## How will we do this?
-- Vanilla Javascript = using javascript without libraries
+- NO VITE VANILLA JS
 + https://www.chartjs.org/
 
  ## Break it down into small problems, into progressive steps
