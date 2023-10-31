@@ -10,15 +10,11 @@ document.addEventListener("DOMContentLoaded", function () {
   let tddata = document.querySelectorAll(
     "#table1 tbody td:not(:first-of-type)"
   );
-  let countryData = [];
-  let data = [];
+  let country = [];
+  // let years = [];
 
   for (let i = 0; i < tdElements.length; i++) {
-    countryData.push(tdElements[i].textContent);
-  }
-
-  for (let i = 0; i < tddata.length; i++) {
-    data.push(tddata[i].textContent);
+    country.push(tdElements[i].textContent);
   }
 
   let chart = new Chart(ctx, {
@@ -27,14 +23,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // The data for our dataset
     data: {
-      labels: countryData,
+      labels: country,
       // Information about the dataset
       datasets: [
         {
           label: "Year",
           backgroundColor: "lightblue",
           borderColor: "royalblue",
-          data: data,
+          data: [],
         },
       ],
     },
@@ -56,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
           {
             scaleLabel: {
               display: true,
-              labelString: "Precipitation in mm",
+              labelString: "Numbers",
             },
           },
         ],
@@ -64,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
           {
             scaleLabel: {
               display: true,
-              labelString: "Month of the Year",
+              labelString: "Countrys",
             },
           },
         ],
