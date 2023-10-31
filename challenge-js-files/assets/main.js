@@ -6,7 +6,20 @@ document.addEventListener("DOMContentLoaded", function () {
   targetElement.parentNode.insertBefore(canvas, targetElement);
   const ctx = canvas.getContext("2d");
 
-  const thead = table.createTHead();
+  let tdElements = document.querySelectorAll("#table1 tbody td:nth-of-type(1)");
+  let tddata = document.querySelectorAll(
+    "#table1 tbody td:not(:first-of-type)"
+  );
+  let countryData = [];
+  let data = [];
+
+  for (let i = 0; i < tdElements.length; i++) {
+    countryData.push(tdElements[i].textContent);
+  }
+
+  for (let i = 0; i < tddata.length; i++) {
+    data.push(tddata[i].textContent);
+  }
 
   let chart = new Chart(ctx, {
     // The type of chart we want to create
@@ -14,30 +27,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // The data for our dataset
     data: {
-      labels: [
-        "Jun 2016",
-        "Jul 2016",
-        "Aug 2016",
-        "Sep 2016",
-        "Oct 2016",
-        "Nov 2016",
-        "Dec 2016",
-        "Jan 2017",
-        "Feb 2017",
-        "Mar 2017",
-        "Apr 2017",
-        "May 2017",
-      ],
+      labels: countryData,
       // Information about the dataset
       datasets: [
         {
           label: "Year",
           backgroundColor: "lightblue",
           borderColor: "royalblue",
-          data: [
-            26.4, 39.8, 66.8, 66.4, 40.6, 55.2, 77.4, 69.8, 57.8, 76, 110.8,
-            142.6,
-          ],
+          data: data,
         },
       ],
     },
