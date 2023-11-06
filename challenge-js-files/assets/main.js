@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Créez un élément canvas pour le graphique
   const canvas = document.createElement("canvas");
   canvas.id = "chart";
   const targetElement = document.getElementById("table1");
@@ -59,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // on push tout ça dans countrydata
     countryData.push(countryRow);
   }
-
+  // les couleurs pour varier
   const colors = [
     "red",
     "blue",
@@ -90,6 +89,10 @@ document.addEventListener("DOMContentLoaded", function () {
   console.table("Years:", years);
   console.table("Countries:", country);
   console.table("Data:", countryData);
+
+  //......................................................................................................................
+  import("./tableau2");
+  //......................................................................................................................
 
   let chart = new Chart(ctx, {
     // The type of chart we want to create
