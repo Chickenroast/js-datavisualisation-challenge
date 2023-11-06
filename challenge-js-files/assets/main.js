@@ -17,13 +17,15 @@ document.addEventListener("DOMContentLoaded", function () {
   let datasets = [];
 
   // Extract years
-  for (let i = 1; i < thElements.length; i++) {
+  for (let i = 2; i < thElements.length; i++) {
+    //on push les th dans years
     years.push(thElements[i].textContent);
   }
 
   // Extract country names
   for (let i = 0; i < tdElements.length; i++) {
     let cellValue = tdElements[i].textContent;
+    //on va utiliser les cellvalue pour qu'il comprenne que c'est un tableau
     if (cellValue === ":") {
       country.push(0); // Replace ":" with 0
     } else {
@@ -35,10 +37,14 @@ document.addEventListener("DOMContentLoaded", function () {
   let countryData = [];
 
   for (let i = 0; i < tdElements.length; i++) {
+    //on declare countryrow comme une ligne d'un tableau
     let countryRow = [];
-    let dataIndex = i * years.length;
+    // on declare un index pour demarrer la data de quelque part
+    //on est obligé de faire +1 pour que notre array fasse 11 de longueur
+    let dataIndex = i * (years.length + 1);
 
-    for (let j = 0; j < years.length; j++) {
+    for (let j = 0; j < years.length + 1; j++) {
+      // on prend la valeur de la cell et on dit qu'elle est egale au contenu de la data + au nombres de years
       let cellValue = tddata[dataIndex + j].textContent;
 
       if (cellValue === ":") {
@@ -50,6 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     }
+    // on push tout ça dans countrydata
     countryData.push(countryRow);
   }
 
