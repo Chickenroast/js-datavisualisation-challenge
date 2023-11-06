@@ -6,54 +6,56 @@ document.addEventListener("DOMContentLoaded", function () {
   targetElement.parentNode.insertBefore(canvas, targetElement);
   const ctx = canvas.getContext("2d");
 
-  // let tdElements = document.querySelectorAll("#table1 tbody td:nth-of-type(1)");
-  // let tddata = document.querySelectorAll("#table1 td");
-  // let thElements = document.querySelectorAll(
-  //   "#table1 tbody tr:nth-of-type(1) th"
-  // );
-
   let tdElements = document.querySelectorAll("#table1 tbody td:nth-of-type(1)");
   let tddata = document.querySelectorAll("#table1 td");
   let thElements = document.querySelectorAll(
     "#table1 tbody tr:nth-of-type(1) th"
   );
 
-  // let tdElements = row.document.querySelectorAll("#table1 td:nth-of-type(1)");
-  // let tddata = row.cells.document.querySelectorAll("#table1 td");
-  // let thElements = row.document.querySelectorAll(
-  //   "#table1 tbody tr:nth-of-type(1) th"
-  // );
-
-  // console.log("th elements:", thElements[i].textContent, country, data);
-
   let country = [];
   let years = [];
-  let data = [];
 
+  // Extract years
   for (let i = 1; i < thElements.length; i++) {
-    if (thElements[i].textContent > 0) {
-      years.push(thElements[i].textContent, [country], [data]);
-      console.log("la: ", thElements[i].textContent, [country], [data]);
-    }
-
-    // console.log("th elements:", thElements[i].textContent, country, data);
+    years.push(thElements[i].textContent);
   }
+
+  // Extract country names
+  for (let i = 0; i < tdElements.length; i++) {
+    let cellValue = tdElements[i].textContent;
+    if (cellValue === ":") {
+      country.push(0); // Replace ":" with 0
+    } else {
+      country.push(cellValue);
+    }
+  }
+
+  // Extract data
+  let countryData = [];
 
   for (let i = 0; i < tdElements.length; i++) {
-    country.push(tdElements[i].textContent);
+    let countryRow = [];
+    let dataIndex = i * years.length;
 
-    for (let j = 1; j < tddata.length; j++) {
-      // console.log("value boucle: ", tddata[i].textContent);
-      let tmp = parseFloat(tddata[j].textContent);
+    for (let j = 0; j < years.length; j++) {
+      let cellValue = tddata[dataIndex + j].textContent;
 
-      if (tmp) {
-        data.push(parseFloat(tddata[j].textContent));
-        // console.log(tddata[i].textContent);
+      if (cellValue === ":") {
+        countryRow.push(0);
+      } else {
+        let value = parseFloat(cellValue.replace(",", "."));
+        if (!isNaN(value)) {
+          countryRow.push(value);
+        }
       }
-
-      // console.log("data test :", data);
     }
+    countryData.push(countryRow);
   }
+
+  // Print the extracted data for debugging
+  console.table("Years:", years);
+  console.table("Countries:", country);
+  console.table("Data:", countryData);
 
   let chart = new Chart(ctx, {
     // The type of chart we want to create
@@ -68,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
           label: years,
           backgroundColor: "lightblue",
           borderColor: "royalblue",
-          data: data,
+          data: countryData,
         },
       ],
     },
@@ -83,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       title: {
         display: true,
-        text: "years",
+        text: "Years",
       },
       scales: {
         yAxes: [
@@ -98,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
           {
             scaleLabel: {
               display: true,
-              labelString: "Countrys",
+              labelString: "Countries",
             },
           },
         ],
