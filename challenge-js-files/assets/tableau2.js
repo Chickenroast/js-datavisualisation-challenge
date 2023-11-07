@@ -7,51 +7,56 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //countrys
   let tdElements = document.querySelectorAll("#table2 tbody td:nth-of-type(1)");
-  //countrydata
+  //   //countrydata
   let tddata = document.querySelectorAll("#table2 tbody td:not(:first-child)");
   //years
   let thElements = document.querySelectorAll("#table2 thead th");
 
   let country = [];
   let years = [];
+  let countryData = [];
 
   // Extract years
   for (let i = 2; i < thElements.length; i++) {
     years.push(thElements[i].textContent);
   }
-  console.log("Years:", years);
 
-  // Extract country names
+  //   Extract country names
   for (let i = 0; i < tdElements.length; i++) {
     let cellValue = tdElements[i].textContent;
     country.push(cellValue);
   }
-  console.log("Country:", country);
 
-  // Extract data
-  let countryData = [];
-
-  for (let i = 0; i < country.length; i++) {
+  //   // Extract data
+  for (let i = 0; i < tdElements.length; i++) {
     // Iterate over countries
     let countryRow = [];
+    let dataIndex = i * (years.length + 1);
 
-    for (let j = 0; j < years.length; j++) {
-      let cellValue = tddata[i * years.length + j].textContent;
-      let value = parseInt(cellValue);
+    for (let j = 0; j < years.length + 1; j++) {
+      let cellValue = tddata[dataIndex + j].textContent;
 
-      if (!isNaN(value)) {
-        countryRow.push(value);
+      if (cellValue === ":") {
+        countryRow.push(0);
+      } else {
+        let value = parseFloat(cellValue.replace(",", "."));
+        if (!isNaN(value)) {
+          countryRow.push(value);
+        }
       }
     }
 
     countryData.push(countryRow);
   }
-  console.log("Country Data:", countryData);
 
-  // Create data for the bar chart
-  const data = {
-    labels: country,
-    datasets: years.map((year, i) => ({
+  // Print the extracted data for debugging
+  console.table("Years:", years);
+  console.table("Country:", country);
+  console.table("Data:", countryData);
+
+  // Organisez les données en fonction des années
+  const datasets = years.map((year, i) => {
+    return {
       label: year,
       data: countryData.map((row) => row[i]),
       backgroundColor: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${
@@ -61,11 +66,15 @@ document.addEventListener("DOMContentLoaded", function () {
         Math.random() * 255
       })`,
       borderWidth: 1,
-    })),
-  };
-  console.log("Final Data:", data);
+    };
+  });
 
-  let chart = new Chart(ctx, {
+  const data = {
+    labels: country,
+    datasets: datasets,
+  };
+
+  const config = {
     type: "bar",
     data: data,
     options: {
@@ -75,5 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
         },
       },
     },
-  });
+  };
+
+  let chart = new Chart(ctx, config);
 });
