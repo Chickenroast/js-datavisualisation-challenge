@@ -90,10 +90,6 @@ document.addEventListener("DOMContentLoaded", function () {
   console.table("Countries:", country);
   console.table("Data:", countryData);
 
-  //......................................................................................................................
-  import("./tableau2");
-  //......................................................................................................................
-
   let chart = new Chart(ctx, {
     // The type of chart we want to create
     type: "line",
@@ -136,4 +132,90 @@ document.addEventListener("DOMContentLoaded", function () {
       },
     },
   });
+
+  //-------------------------FETCH --------------------------------------------------------
+
+  // const canvas2 = document.createElement("canvas");
+  // canvas2.id = "chart2";
+  // const targettab = document.getElementById("See_also");
+  // targettab.parentNode.insertBefore(canvas2, targettab);
+  // const ctx2 = canvas2.getContext("2d");
+
+  // var labels2 = [];
+  // var dataLength2 = 10; // Initial length
+
+  // var chart2 = new Chart(ctx2, {
+  //   type: "line",
+  //   data: {
+  //     labels: labels2,
+  //     datasets: [
+  //       {
+  //         label: "Live Data",
+  //         data: [],
+  //         borderColor: "blue",
+  //         fill: false,
+  //       },
+  //     ],
+  //   },
+  //   options: {
+  //     layout: {
+  //       padding: 10,
+  //     },
+  //     legend: {
+  //       display: false,
+  //     },
+  //     title: {
+  //       display: true,
+  //       text: "Live Chart with Real-time Data",
+  //     },
+  //     scales: {
+  //       yAxes: [
+  //         {
+  //           scaleLabel: {
+  //             display: true,
+  //             labelString: "Values",
+  //           },
+  //         },
+  //       ],
+  //       xAxes: [
+  //         {
+  //           scaleLabel: {
+  //             display: true,
+  //             labelString: "Time",
+  //           },
+  //         },
+  //       ],
+  //     },
+  //   },
+  // });
+
+  // function updateChart2() {
+  //   fetch(
+  //     "https://canvasjs.com/services/data/datapoints.php?xstart=" +
+  //       (dataLength2 + 1)
+  //   )
+  //     .then((response) => response.json())
+  //     .then((newData) => {
+  //       newData.forEach((dataPoint) => {
+  //         chart2.data.datasets[0].data.push({
+  //           x: dataPoint[0],
+  //           y: dataPoint[1],
+  //         });
+  //         labels2.push(dataPoint[0]);
+  //         dataLength2 = chart2.data.datasets[0].data.length;
+
+  //         if (dataLength2 > 10) {
+  //           chart2.data.datasets[0].data.shift();
+  //           labels2.shift();
+  //         }
+
+  //         chart2.update();
+  //         setTimeout(updateChart2, 1000);
+  //       });
+  //     });
+  // }
+
+  // window.onload = function () {
+  //   updateChart2();
+  // };
 });
