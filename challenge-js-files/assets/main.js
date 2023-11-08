@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const ctx2 = canvas2.getContext("2d");
 
   var labels2 = [];
-  var dataLength2 = 10; // Initial length
+  var data2 = [];
 
   var chart2 = new Chart(ctx2, {
     type: "line",
@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
       datasets: [
         {
           label: "Live Data",
-          data: [],
+          data: data2,
           borderColor: "blue",
           fill: false,
         },
@@ -192,29 +192,28 @@ document.addEventListener("DOMContentLoaded", function () {
   function updateChart2() {
     fetch(
       "https://canvasjs.com/services/data/datapoints.php?xstart=" +
-        (dataLength2 + 1)
+        (labels2.length + 1) +
+        "&ystart=" +
+        (data2[data2.length - 1] || 0) +
+        "&length=1&type=json"
     )
       .then((response) => response.json())
-      .then((newData) => {
-        newData.forEach((dataPoint) => {
-          chart2.data.datasets[0].data.push({
-            x: dataPoint[0],
-            y: dataPoint[1],
-          });
-          labels2.push(dataPoint[0]);
-          dataLength2 = chart2.data.datasets[0].data.length;
+      .then((data) => {
+        if (data.length > 0) {
+          const newDataPoint = data[0];
 
-          if (dataLength2 > 10) {
-            chart2.data.datasets[0].data.shift();
-            labels2.shift();
-          }
-
+          labels2.push(newDataPoint[0]);
+          data2.push(newDataPoint[1]);
           chart2.update();
-        });
+        }
+        setTimeout(updateChart2, 1000);
+      })
+      .catch((error) => {
+        console.error(error);
+        setTimeout(updateChart2, 1000);
       });
   }
 
-  window.onload = function () {
-    updateChart2();
-  };
+  // Appel initial de la fonction updateChart2
+  updateChart2();
 });
