@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+export function createChart() {
   const canvas = document.createElement("canvas");
   canvas.id = "chart";
   const targetElement = document.getElementById("table2");
@@ -87,4 +87,4 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   let chart = new Chart(ctx, config);
-});
+}
