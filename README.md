@@ -14,7 +14,7 @@ Temps de réalisation : 10 jours
 
 - handling of the DOM:
 - find selector with querySelectorAll
-- Inject with targetElement parentnode and insert before, + createelement
+- Inject with parentnode and insert before, + createelement
 - take the data start with a index and with the queryselector 
   
 #### AJAX/FETCH : 
