@@ -138,7 +138,7 @@ let chart = new Chart(ctx, {
 
 const canvas2 = document.createElement("canvas");
 canvas2.id = "chart2";
-const targettab = document.getElementById("See_also");
+const targettab = document.getElementById("firstHeading");
 targettab.parentNode.insertBefore(canvas2, targettab);
 const ctx2 = canvas2.getContext("2d");
 
